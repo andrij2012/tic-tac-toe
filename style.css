@@ -1,10 +1,9 @@
 body {
 	margin: 0;
 	padding: 0;
-	background: #F0FFF0;
 }
 
 #canvas {
-	width: 600px;
-	height: 600px;
+    margin-top: 20px;
+	margin-left: 20px;
 }
