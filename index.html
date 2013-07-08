@@ -2,11 +2,16 @@
 <html>
 	<head>
 		<title>Tic Tac Toe Game</title>
-		<link rel="stylesheet" type="text/css" href="style.css" />
 		<script type="text/javascript" src="script.js"></script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+        </style>
 	</head>
 	<body onload="javascript: paintBoard();">
-			<canvas id="canvas" width="300" height="300">
+			<canvas id="canvas" width="500" height="500" onclick="javascript: movePlayer(event);">
 				<h1>Your browser don't support HTML5! Please update your browser.</h1>
 			</canvas>
 	</body>
