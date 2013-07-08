@@ -1,5 +1,5 @@
 var context;
-var clickedRaws = new Array(9);
+var clickedRaw = new Array();
 var width, height; // width and height of Board
 
 /**
@@ -12,9 +12,7 @@ function paintBoard() {
     height  = board.height;
     context = board.getContext('2d');
 
-    /**
-     * Draw the board
-     */
+    // Paint the board
     context.beginPath();
     context.strokeStyle = "#000";
     context.lineWidth = 3;
@@ -37,9 +35,15 @@ function paintBoard() {
 
 /**
  *  Paint the X
+ *  @param float
+ *  @param float
  */
 function paintX(x, y) {
-        clickedRaws[clickedRaws.length] = x + " " + y;
+    var pair = x + " " + y;
+
+    if (in_array(pair, clickedRaw)) {
+        return false;
+    } else {
         context.beginPath();
         context.strokeStyle = '#FF0000';
 
@@ -59,52 +63,85 @@ function paintX(x, y) {
         context.lineTo(endX, beginY);
 
         context.stroke();
-
         context.closePath();
-        console.log(clickedRaws[0]);
 
+        clickedRaw[clickedRaw.length] = pair;
+
+        return true;
+    }
 
 }
 
 /**
  * Paint the O
+ * @param float
+ * @param float
  */
 function paintO(x, y) {
+    var pair = x + " " + y;
 
-            clickedRaws[clickedRaws.length] = x + " " + y;
-            context.beginPath();
-            context.strokeStyle = '#0000FF';
+    if (in_array(pair, clickedRaw)) {
+        return false;
+    } else {
+        context.beginPath();
+        context.strokeStyle = '#0000FF';
 
-            var offsetX = (width / 3) * 0.1;
-            var offsetY = (height / 3) * 0.1;
+        var offsetX = (width / 3) * 0.1;
+        var offsetY = (height / 3) * 0.1;
 
-            var beginX = x * (width / 3) + offsetX;
-            var beginY = y * (height / 3) + offsetY;
+        var beginX = x * (width / 3) + offsetX;
+        var beginY = y * (height / 3) + offsetY;
 
-            var endX = (x + 1) * (width / 3) - offsetX * 2;
-            var endY = (y + 1) * (height / 3) - offsetY * 2;
+        var endX = (x + 1) * (width / 3) - offsetX * 2;
+        var endY = (y + 1) * (height / 3) - offsetY * 2;
 
-            context.arc(beginX + ((endX - beginX) / 2), beginY + ((endY - beginY) / 2), (endX - beginX) / 2 , 0, Math.PI * 2);
+        context.arc(beginX + ((endX - beginX) / 2), beginY + ((endY - beginY) / 2), (endX - beginX) / 2, 0, Math.PI * 2);
 
-            context.stroke();
-            context.closePath();
+        context.stroke();
+        context.closePath();
+        clickedRaw[clickedRaw.length] = pair;
 
-
+        return true;
+    }
 }
 
 /**
- * Click player
- * @param e event
+ * Player move on the Board
+ * @param event
  */
 function movePlayer(e) {
     var x = Math.floor(e.clientX / (width / 3));
     var y = Math.floor(e.clientY / (height / 3));
-    paintX(x, y);
-    moveComputer();
+
+    if (paintX(x, y)){
+        moveComputer();
+    }
+
 }
 
+/**
+ * Computer move on the Board
+ */
 function moveComputer() {
     var x = Math.floor(Math.random() * 3);
     var y = Math.floor(Math.random() * 3);
-    paintO(x ,y);
+
+    if (!paintO(x, y)) {
+        moveComputer();
+    }
+}
+
+/**
+ * Is a value in array?
+ * @param mixed
+ * @param array
+ * @return boolean
+ */
+function in_array(value, array) {
+    for(var i = 0; i < array.length; i++) {
+        console.log(array[i]);
+        if(array[i] == value)
+            return true;
+    }
+    return false;
 }
