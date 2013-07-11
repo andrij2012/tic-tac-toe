@@ -1,5 +1,6 @@
 var context;
-var clickedRaw = new Array();
+var xBoard = new Array();
+var oBoard = new Array();
 var width, height; // width and height of Board
 
 /**
@@ -41,7 +42,7 @@ function paintBoard() {
 function paintX(x, y) {
     var pair = x + " " + y;
 
-    if (in_array(pair, clickedRaw)) {
+    if ((in_array(pair, xBoard)) || (in_array(pair, oBoard))) {
         return false;
     } else {
         context.beginPath();
@@ -65,7 +66,7 @@ function paintX(x, y) {
         context.stroke();
         context.closePath();
 
-        clickedRaw[clickedRaw.length] = pair;
+        xBoard[xBoard.length] = pair;
 
         return true;
     }
@@ -80,7 +81,7 @@ function paintX(x, y) {
 function paintO(x, y) {
     var pair = x + " " + y;
 
-    if (in_array(pair, clickedRaw)) {
+    if ((in_array(pair, oBoard)) || (in_array(pair, xBoard))) {
         return false;
     } else {
         context.beginPath();
@@ -99,7 +100,7 @@ function paintO(x, y) {
 
         context.stroke();
         context.closePath();
-        clickedRaw[clickedRaw.length] = pair;
+        oBoard[oBoard.length] = pair;
 
         return true;
     }
@@ -127,7 +128,10 @@ function moveComputer() {
     var y = Math.floor(Math.random() * 3);
 
     if (!paintO(x, y)) {
-        moveComputer();
+        if(xBoard.length == 5)
+        {
+            return false;
+        } else moveComputer();
     }
 }
 
