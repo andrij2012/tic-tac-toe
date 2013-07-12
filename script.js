@@ -127,20 +127,23 @@ function movePlayer(e) {
     if(paintX(x, y)) {
         if(checkWins()) {
             restart();
-        } else
+        } else if(oBoard.length == 0) {
+            setTimeout('firstMoveComputer()', 400);
+        } else {
             setTimeout('moveComputer()', 400);
+        }
     }
 }
 
 /**
  * Computer move on the Board
  */
-function moveComputer() {
+function firstMoveComputer() {
     var x = Math.floor(Math.random() * 3);
     var y = Math.floor(Math.random() * 3);
 
     if(!paintO(x, y)) {
-        moveComputer();
+        firstMoveComputer();
     } else {
         if(checkWins()) {
             restart();
@@ -156,7 +159,6 @@ function checkWins() {
 
         if(xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1) {
             alert("Player win!");
-            restart();
             return true;
         } else if(oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1) {
             alert("Computer win!");
@@ -173,4 +175,224 @@ function restart() {
     xBoard = [];
     oBoard = [];
     paintBoard();
+}
+
+function moveComputer() {
+
+    /** Defense
+     * |x|x|x|
+     * | | | |
+     * | | | |
+     */
+    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('1 0') !== -1) {
+        paintO(2, 0);
+
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('2 0') !== -1) {
+        paintO(1, 0);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('1 0') !== -1 && xBoard.indexOf('2 0') !== -1) {
+        paintO(0, 0);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+
+    /**
+     * |x| | |
+     * |x| | |
+     * |x| | |
+     */
+    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('0 1') !== -1) {
+        paintO(0, 2);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('0 2') !== -1) {
+        paintO(0, 1);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('0 1') !== -1 && xBoard.indexOf('0 2') !== -1) {
+        paintO(0, 0);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+
+    /**
+     * |x| | |
+     * | |x| |
+     * | | |x|
+     */
+    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('1 1') !== -1) {
+        paintO(2, 2);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('2 2') !== -1) {
+        paintO(1, 1);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('1 1') !== -1 && xBoard.indexOf('2 2') !== -1) {
+        paintO(0, 0);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+
+    /**
+     * | | | |
+     * |x|x|x|
+     * | | | |
+     */
+    if(xBoard.indexOf('0 1') !== -1 && xBoard.indexOf('1 1') !== -1) {
+        paintO(2, 1);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('0 1') !== -1 && xBoard.indexOf('2 1') !== -1) {
+        paintO(1, 1);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('1 1') !== -1 && xBoard.indexOf('2 1') !== -1) {
+        paintO(0, 1);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+
+    /**
+     * | |x| |
+     * | |x| |
+     * | |x| |
+     */
+    if(xBoard.indexOf('1 0') !== -1 && xBoard.indexOf('1 1') !== -1) {
+        paintO(1, 2);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('1 0') !== -1 && xBoard.indexOf('1 2') !== -1) {
+        paintO(1 ,1);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('1 1') !== -1 && xBoard.indexOf('1 2') !== -1) {
+        paintO(1, 0);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+
+    /**
+     * | | |x|
+     * | |x| |
+     * |x| | |
+     */
+    if(xBoard.indexOf('2 0') !== -1 && xBoard.indexOf('1 1') !== -1) {
+        paintO(0, 2);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('2 0') !== -1 && xBoard.indexOf('0 2') !== -1) {
+        paintO(1, 1);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('1 1') !== -1 && xBoard.indexOf('0 2') !== -1) {
+        paintO(2, 0);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+
+    /**
+     * | | | |
+     * | | | |
+     * |x|x|x|
+     */
+    if(xBoard.indexOf('0 2') !== -1 && xBoard.indexOf('1 2') !== -1) {
+        paintO(2, 2);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('0 2') !== -1 && xBoard.indexOf('2 2') !== -1) {
+        paintO(1, 2);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('1 2') !== -1 && xBoard.indexOf('2 2') !== -1) {
+        paintO(0, 2);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+
+    /**
+     * | | |x|
+     * | | |x|
+     * | | |x|
+     */
+    if(xBoard.indexOf('2 0') !== -1 && xBoard.indexOf('2 1') !== -1) {
+        paintO(2, 2);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('2 0') !== -1 && xBoard.indexOf('2 2') !== -1) {
+        paintO(2, 1);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
+    if(xBoard.indexOf('2 1') !== -1 && xBoard.indexOf('2 2') !== -1) {
+        paintO(2, 0);
+        if(checkWins()) {
+            restart();
+        }
+        return true;
+    }
 }
