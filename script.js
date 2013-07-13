@@ -178,221 +178,34 @@ function restart() {
 }
 
 function moveComputer() {
+    if(checkWins()) {
+        restart();
+        return;
+    }
+    for(var i = 0; i < winCombinations.length; i++) {
+        ax = parseInt(winCombinations[i][0].charAt(0), 10);
+        ay = parseInt(winCombinations[i][0].charAt(2), 10);
+        bx = parseInt(winCombinations[i][1].charAt(0), 10);
+        by = parseInt(winCombinations[i][1].charAt(2), 10);
+        cx = parseInt(winCombinations[i][2].charAt(0), 10);
+        cy = parseInt(winCombinations[i][2].charAt(2), 10);
 
-    /** Defense
-     * |x|x|x|
-     * | | | |
-     * | | | |
-     */
-    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('1 0') !== -1) {
-        paintO(2, 0);
+        a = winCombinations[i][0];
+        b = winCombinations[i][1];
+        c  =winCombinations[i][2];
 
-        if(checkWins()) {
-            restart();
+        if(xBoard.indexOf(a) !== -1 && xBoard.indexOf(b) !== -1) {
+            paintO(cx,cy);
         }
-        return true;
+        if(xBoard.indexOf(a) !== -1 && xBoard.indexOf(c) !== -1) {
+            paintO(bx, by);
+        }
+        if ((xBoard.indexOf(b) !== -1 && xBoard.indexOf(c) !== -1) ||
+            (xBoard.indexOf(c) !== -1 && xBoard.indexOf(b) !== -1)) {
+            paintO(ax, ay);
+        }
     }
-    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('2 0') !== -1) {
-        paintO(1, 0);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('1 0') !== -1 && xBoard.indexOf('2 0') !== -1) {
-        paintO(0, 0);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-
-    /**
-     * |x| | |
-     * |x| | |
-     * |x| | |
-     */
-    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('0 1') !== -1) {
-        paintO(0, 2);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('0 2') !== -1) {
-        paintO(0, 1);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('0 1') !== -1 && xBoard.indexOf('0 2') !== -1) {
-        paintO(0, 0);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-
-    /**
-     * |x| | |
-     * | |x| |
-     * | | |x|
-     */
-    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('1 1') !== -1) {
-        paintO(2, 2);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('0 0') !== -1 && xBoard.indexOf('2 2') !== -1) {
-        paintO(1, 1);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('1 1') !== -1 && xBoard.indexOf('2 2') !== -1) {
-        paintO(0, 0);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-
-    /**
-     * | | | |
-     * |x|x|x|
-     * | | | |
-     */
-    if(xBoard.indexOf('0 1') !== -1 && xBoard.indexOf('1 1') !== -1) {
-        paintO(2, 1);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('0 1') !== -1 && xBoard.indexOf('2 1') !== -1) {
-        paintO(1, 1);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('1 1') !== -1 && xBoard.indexOf('2 1') !== -1) {
-        paintO(0, 1);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-
-    /**
-     * | |x| |
-     * | |x| |
-     * | |x| |
-     */
-    if(xBoard.indexOf('1 0') !== -1 && xBoard.indexOf('1 1') !== -1) {
-        paintO(1, 2);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('1 0') !== -1 && xBoard.indexOf('1 2') !== -1) {
-        paintO(1 ,1);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('1 1') !== -1 && xBoard.indexOf('1 2') !== -1) {
-        paintO(1, 0);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-
-    /**
-     * | | |x|
-     * | |x| |
-     * |x| | |
-     */
-    if(xBoard.indexOf('2 0') !== -1 && xBoard.indexOf('1 1') !== -1) {
-        paintO(0, 2);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('2 0') !== -1 && xBoard.indexOf('0 2') !== -1) {
-        paintO(1, 1);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('1 1') !== -1 && xBoard.indexOf('0 2') !== -1) {
-        paintO(2, 0);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-
-    /**
-     * | | | |
-     * | | | |
-     * |x|x|x|
-     */
-    if(xBoard.indexOf('0 2') !== -1 && xBoard.indexOf('1 2') !== -1) {
-        paintO(2, 2);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('0 2') !== -1 && xBoard.indexOf('2 2') !== -1) {
-        paintO(1, 2);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('1 2') !== -1 && xBoard.indexOf('2 2') !== -1) {
-        paintO(0, 2);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-
-    /**
-     * | | |x|
-     * | | |x|
-     * | | |x|
-     */
-    if(xBoard.indexOf('2 0') !== -1 && xBoard.indexOf('2 1') !== -1) {
-        paintO(2, 2);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('2 0') !== -1 && xBoard.indexOf('2 2') !== -1) {
-        paintO(2, 1);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
-    }
-    if(xBoard.indexOf('2 1') !== -1 && xBoard.indexOf('2 2') !== -1) {
-        paintO(2, 0);
-        if(checkWins()) {
-            restart();
-        }
-        return true;
+    if(checkWins()) {
+        restart();
     }
 }
