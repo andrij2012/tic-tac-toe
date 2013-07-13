@@ -136,7 +136,7 @@ function movePlayer(e) {
 }
 
 /**
- * Computer move on the Board
+ * First move of computer is random
  */
 function firstMoveComputer() {
     var x = Math.floor(Math.random() * 3);
@@ -150,7 +150,10 @@ function firstMoveComputer() {
         }
     }
 }
-
+/**
+ * Check the winner
+ * @returns boolean
+ */
 function checkWins() {
     for(var i = 0; i < winCombinations.length; i++) {
         a = winCombinations[i][0];
@@ -170,18 +173,29 @@ function checkWins() {
     }
 }
 
+/**
+ * Restart the game
+ */
 function restart() {
+
+    // Reset data
     context.clearRect (0, 0, width , height);
     xBoard = [];
     oBoard = [];
+    winCombinations =  [['0 0', '1 0', '2 0'], ['0 1', '1 1', '2 1'], ['0 2', '1 2', '2 2'],
+                        ['0 0', '0 1', '0 2'], ['1 0', '1 1', '1 2'], ['2 0', '2 1', '2 2'],
+                        ['0 0', '1 1', '2 2'], ['2 0', '1 1', '0 2']];
     paintBoard();
 }
-
+/**
+ * Move computer after first move
+ */
 function moveComputer() {
     if(checkWins()) {
         restart();
         return true;
     }
+
     for(var i = 0; i < winCombinations.length; i++) {
 
         ax = parseInt(winCombinations[i][0].charAt(0), 10);
@@ -195,65 +209,43 @@ function moveComputer() {
         b = winCombinations[i][1];
         c  =winCombinations[i][2];
 
-        var indexA = winCombinations[i].indexOf(a);
-        var indexB = winCombinations[i].indexOf(b);
-        var indexC = winCombinations[i].indexOf(c);
-
 
         // ----- ATTACK -----
-        if((oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1) ||
+        /*if((oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1) ||
             (oBoard.indexOf(b) != -1 && oBoard.indexOf(a) != -1)) {
             paintO(cx,cy);
-            winCombinations[i].slice(indexA, 1);
-            winCombinations[i].slice(indexB, 1);
-            winCombinations[i].slice(indexC, 1);
-            break;
+
         }
         if((oBoard.indexOf(a) != -1 && oBoard.indexOf(c) != -1) ||
             (oBoard.indexOf(c) != -1 && oBoard.indexOf(a) != -1)) {
             paintO(bx, by);
-            winCombinations[i].slice(indexA, 1);
-            winCombinations[i].slice(indexB, 1);
-            winCombinations[i].slice(indexC, 1);
-            break;
+
         }
         if ((oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1) ||
             (oBoard.indexOf(c) != -1 && oBoard.indexOf(b) != -1)) {
             paintO(ax, ay);
-            winCombinations[i].slice(indexA, 1);
-            winCombinations[i].slice(indexB, 1);
-            winCombinations[i].slice(indexC, 1);
-            break;
-        }
+
+        }*/
 
         // ----- DEFENSE -----
         if((xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1) ||
             (xBoard.indexOf(b) != -1 && xBoard.indexOf(a) != -1)) {
             paintO(cx,cy);
-            winCombinations[i].slice(indexA, 1);
-            winCombinations[i].slice(indexB, 1);
-            winCombinations[i].slice(indexC, 1);
-            console.log(winCombinations.length);
+            winCombinations.splice(i, 1);
             break;
         }
         if((xBoard.indexOf(a) != -1 && xBoard.indexOf(c) != -1) ||
             (xBoard.indexOf(c) != -1 && xBoard.indexOf(a) != -1)) {
             paintO(bx, by);
-            winCombinations[i].slice(indexA, 1);
-            winCombinations[i].slice(indexB, 1);
-            winCombinations[i].slice(indexC, 1);
+            winCombinations.splice(i, 1);
             break;
         }
         if ((xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1) ||
             (xBoard.indexOf(c) != -1 && xBoard.indexOf(b) != -1)) {
             paintO(ax, ay);
-            winCombinations[i].slice(indexA, 1);
-            winCombinations[i].slice(indexB, 1);
-            winCombinations[i].slice(indexC, 1);
+            winCombinations.splice(i, 1);
             break;
         }
-
-
     }
     if(checkWins()) {
         restart();
