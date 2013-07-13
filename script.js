@@ -180,9 +180,10 @@ function restart() {
 function moveComputer() {
     if(checkWins()) {
         restart();
-        return;
+        return true;
     }
     for(var i = 0; i < winCombinations.length; i++) {
+
         ax = parseInt(winCombinations[i][0].charAt(0), 10);
         ay = parseInt(winCombinations[i][0].charAt(2), 10);
         bx = parseInt(winCombinations[i][1].charAt(0), 10);
@@ -194,18 +195,68 @@ function moveComputer() {
         b = winCombinations[i][1];
         c  =winCombinations[i][2];
 
-        if(xBoard.indexOf(a) !== -1 && xBoard.indexOf(b) !== -1) {
+        var indexA = winCombinations[i].indexOf(a);
+        var indexB = winCombinations[i].indexOf(b);
+        var indexC = winCombinations[i].indexOf(c);
+
+
+        // ----- ATTACK -----
+        if((oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1) ||
+            (oBoard.indexOf(b) != -1 && oBoard.indexOf(a) != -1)) {
             paintO(cx,cy);
+            winCombinations[i].slice(indexA, 1);
+            winCombinations[i].slice(indexB, 1);
+            winCombinations[i].slice(indexC, 1);
+            break;
         }
-        if(xBoard.indexOf(a) !== -1 && xBoard.indexOf(c) !== -1) {
+        if((oBoard.indexOf(a) != -1 && oBoard.indexOf(c) != -1) ||
+            (oBoard.indexOf(c) != -1 && oBoard.indexOf(a) != -1)) {
             paintO(bx, by);
+            winCombinations[i].slice(indexA, 1);
+            winCombinations[i].slice(indexB, 1);
+            winCombinations[i].slice(indexC, 1);
+            break;
         }
-        if ((xBoard.indexOf(b) !== -1 && xBoard.indexOf(c) !== -1) ||
-            (xBoard.indexOf(c) !== -1 && xBoard.indexOf(b) !== -1)) {
+        if ((oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1) ||
+            (oBoard.indexOf(c) != -1 && oBoard.indexOf(b) != -1)) {
             paintO(ax, ay);
+            winCombinations[i].slice(indexA, 1);
+            winCombinations[i].slice(indexB, 1);
+            winCombinations[i].slice(indexC, 1);
+            break;
         }
+
+        // ----- DEFENSE -----
+        if((xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1) ||
+            (xBoard.indexOf(b) != -1 && xBoard.indexOf(a) != -1)) {
+            paintO(cx,cy);
+            winCombinations[i].slice(indexA, 1);
+            winCombinations[i].slice(indexB, 1);
+            winCombinations[i].slice(indexC, 1);
+            console.log(winCombinations.length);
+            break;
+        }
+        if((xBoard.indexOf(a) != -1 && xBoard.indexOf(c) != -1) ||
+            (xBoard.indexOf(c) != -1 && xBoard.indexOf(a) != -1)) {
+            paintO(bx, by);
+            winCombinations[i].slice(indexA, 1);
+            winCombinations[i].slice(indexB, 1);
+            winCombinations[i].slice(indexC, 1);
+            break;
+        }
+        if ((xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1) ||
+            (xBoard.indexOf(c) != -1 && xBoard.indexOf(b) != -1)) {
+            paintO(ax, ay);
+            winCombinations[i].slice(indexA, 1);
+            winCombinations[i].slice(indexB, 1);
+            winCombinations[i].slice(indexC, 1);
+            break;
+        }
+
+
     }
     if(checkWins()) {
         restart();
+        return true;
     }
 }
