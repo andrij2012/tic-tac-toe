@@ -211,41 +211,66 @@ function moveComputer() {
 
 
         // ----- ATTACK -----
-        /*if((oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1) ||
+        if((oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1) ||
             (oBoard.indexOf(b) != -1 && oBoard.indexOf(a) != -1)) {
-            paintO(cx,cy);
-
+            if(xBoard.indexOf(c) != -1) {
+                continue;
+            } else {
+                paintO(cx,cy);
+                break;
+            }
         }
         if((oBoard.indexOf(a) != -1 && oBoard.indexOf(c) != -1) ||
             (oBoard.indexOf(c) != -1 && oBoard.indexOf(a) != -1)) {
-            paintO(bx, by);
+            if(xBoard.indexOf(b) != -1) {
+                continue;
+            } else {
+                paintO(bx, by);
+                break;
+            }
 
         }
         if ((oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1) ||
             (oBoard.indexOf(c) != -1 && oBoard.indexOf(b) != -1)) {
-            paintO(ax, ay);
+            if(xBoard.indexOf(a) != -1) {
+                continue;
+            } else {
+                paintO(ax, ay);
+                break;
+            }
 
-        }*/
+        }
 
         // ----- DEFENSE -----
         if((xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1) ||
             (xBoard.indexOf(b) != -1 && xBoard.indexOf(a) != -1)) {
-            paintO(cx,cy);
-            winCombinations.splice(i, 1);
-            break;
-        }
-        if((xBoard.indexOf(a) != -1 && xBoard.indexOf(c) != -1) ||
+            if(oBoard.indexOf(c) != -1) {
+                continue;
+            } else {
+                paintO(cx,cy);
+                break;
+            }
+        } else if((xBoard.indexOf(a) != -1 && xBoard.indexOf(c) != -1) ||
             (xBoard.indexOf(c) != -1 && xBoard.indexOf(a) != -1)) {
-            paintO(bx, by);
-            winCombinations.splice(i, 1);
-            break;
-        }
-        if ((xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1) ||
+            if(oBoard.indexOf(b) != -1) {
+                continue;
+            } else {
+                paintO(bx, by);
+                break;
+            }
+        } else if((xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1) ||
             (xBoard.indexOf(c) != -1 && xBoard.indexOf(b) != -1)) {
-            paintO(ax, ay);
-            winCombinations.splice(i, 1);
+            if(oBoard.indexOf(a) != -1) {
+                continue;
+            } else {
+                paintO(ax, ay);
+                break;
+            }
+
+        } /*else {
+            firstMoveComputer();
             break;
-        }
+        }*/
     }
     if(checkWins()) {
         restart();
