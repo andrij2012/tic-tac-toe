@@ -219,8 +219,7 @@ function moveComputer() {
                 paintO(cx,cy);
                 break;
             }
-        }
-        if((oBoard.indexOf(a) != -1 && oBoard.indexOf(c) != -1) ||
+        } else if((oBoard.indexOf(a) != -1 && oBoard.indexOf(c) != -1) ||
             (oBoard.indexOf(c) != -1 && oBoard.indexOf(a) != -1)) {
             if(xBoard.indexOf(b) != -1) {
                 continue;
@@ -229,8 +228,7 @@ function moveComputer() {
                 break;
             }
 
-        }
-        if ((oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1) ||
+        } else if ((oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1) ||
             (oBoard.indexOf(c) != -1 && oBoard.indexOf(b) != -1)) {
             if(xBoard.indexOf(a) != -1) {
                 continue;
@@ -239,7 +237,7 @@ function moveComputer() {
                 break;
             }
 
-        }
+        } else
 
         // ----- DEFENSE -----
         if((xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1) ||
