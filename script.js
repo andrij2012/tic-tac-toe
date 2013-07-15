@@ -6,6 +6,10 @@ var winCombinations =  [['0 0', '1 0', '2 0'], ['0 1', '1 1', '2 1'], ['0 2', '1
                         ['0 0', '0 1', '0 2'], ['1 0', '1 1', '1 2'], ['2 0', '2 1', '2 2'],
                         ['0 0', '1 1', '2 2'], ['2 0', '1 1', '0 2']]; // winning combinations
 
+window.onload = function() {
+    paintBoard();
+};
+
 /**
  * Paint the Board for the game
  * |0 0|1 0|2 0|
@@ -39,10 +43,6 @@ function  paintBoard() {
     context.stroke();
     context.closePath();
 }
-
-window.onload = function() {
-    paintBoard();
-};
 
 /**
  *  Paint the X
@@ -124,21 +124,29 @@ function movePlayer(e) {
     var x = Math.floor(e.clientX / (width / 3));
     var y = Math.floor(e.clientY / (height / 3));
 
+    function timeOut() {
+        if(oBoard.length == 0) {
+            randomMoveComputer();
+        } else {
+            if (!attackComputer()) {
+                if (!defenseComputer()) {
+                    randomMoveComputer();
+                }
+            }
+        }
+    }
+
     if(paintX(x, y)) {
         if(checkWins()) {
             restart();
-        } else if(oBoard.length == 0) {
-            setTimeout('firstMoveComputer()', 400);
-        } else {
-            setTimeout('moveComputer()', 400);
-        }
+        } else setTimeout(timeOut, 400);
     }
 }
 
 /**
- * First move of computer is random
+ * Move of computer is random (first move etc.)
  */
-function firstMoveComputer() {
+function randomMoveComputer() {
     var x = Math.floor(Math.random() * 3);
     var y = Math.floor(Math.random() * 3);
 
@@ -150,6 +158,110 @@ function firstMoveComputer() {
         }
     }
 }
+
+/**
+ * Computer move that purposed for attack
+ */
+function attackComputer() {
+    for (var i = 0; i < winCombinations.length; i++) {
+        ax = parseInt(winCombinations[i][0].charAt(0), 10);
+        ay = parseInt(winCombinations[i][0].charAt(2), 10);
+        bx = parseInt(winCombinations[i][1].charAt(0), 10);
+        by = parseInt(winCombinations[i][1].charAt(2), 10);
+        cx = parseInt(winCombinations[i][2].charAt(0), 10);
+        cy = parseInt(winCombinations[i][2].charAt(2), 10);
+
+        a = winCombinations[i][0];
+        b = winCombinations[i][1];
+        c  =winCombinations[i][2];
+
+        if((oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1) ||
+            (oBoard.indexOf(b) != -1 && oBoard.indexOf(a) != -1)) {
+            if(xBoard.indexOf(c) != -1) {
+                continue;
+            } else {
+                paintO(cx,cy);
+                if(checkWins()) restart();
+                return true;
+            }
+        } else if((oBoard.indexOf(a) != -1 && oBoard.indexOf(c) != -1) ||
+            (oBoard.indexOf(c) != -1 && oBoard.indexOf(a) != -1)) {
+            if(xBoard.indexOf(b) != -1) {
+                continue;
+            } else {
+                paintO(bx, by);
+                if(checkWins()) restart();
+                return true;
+            }
+        } else if ((oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1) ||
+            (oBoard.indexOf(c) != -1 && oBoard.indexOf(b) != -1)) {
+            if(xBoard.indexOf(a) != -1) {
+                continue;
+            } else {
+                paintO(ax, ay);
+                if(checkWins()) restart();
+                return true;
+            }
+        }
+    }
+    if(checkWins()) {
+        restart();
+        return true;
+    }
+}
+
+/**
+ * Computer move that purposed for defence
+ */
+function defenseComputer() {
+    for(var i = 0; i < winCombinations.length; i++) {
+        ax = parseInt(winCombinations[i][0].charAt(0), 10);
+        ay = parseInt(winCombinations[i][0].charAt(2), 10);
+        bx = parseInt(winCombinations[i][1].charAt(0), 10);
+        by = parseInt(winCombinations[i][1].charAt(2), 10);
+        cx = parseInt(winCombinations[i][2].charAt(0), 10);
+        cy = parseInt(winCombinations[i][2].charAt(2), 10);
+
+        a = winCombinations[i][0];
+        b = winCombinations[i][1];
+        c  =winCombinations[i][2];
+
+        if((xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1) ||
+            (xBoard.indexOf(b) != -1 && xBoard.indexOf(a) != -1)) {
+            if(oBoard.indexOf(c) != -1) {
+                continue;
+            } else {
+                paintO(cx,cy);
+                if(checkWins()) restart();
+                return true;
+            }
+        } else if((xBoard.indexOf(a) != -1 && xBoard.indexOf(c) != -1) ||
+            (xBoard.indexOf(c) != -1 && xBoard.indexOf(a) != -1)) {
+            if(oBoard.indexOf(b) != -1) {
+                continue;
+            } else {
+                paintO(bx, by);
+                if(checkWins()) restart();
+                return true;
+            }
+        } else if((xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1) ||
+            (xBoard.indexOf(c) != -1 && xBoard.indexOf(b) != -1)) {
+            if(oBoard.indexOf(a) != -1) {
+                continue;
+            } else {
+                paintO(ax, ay);
+                if(checkWins()) restart();
+                return true;
+            }
+
+        }
+    }
+    if(checkWins()) {
+        restart();
+        return true;
+    }
+}
+
 /**
  * Check the winner
  * @returns boolean
@@ -186,92 +298,4 @@ function restart() {
                         ['0 0', '0 1', '0 2'], ['1 0', '1 1', '1 2'], ['2 0', '2 1', '2 2'],
                         ['0 0', '1 1', '2 2'], ['2 0', '1 1', '0 2']];
     paintBoard();
-}
-/**
- * Move computer after first move
- */
-function moveComputer() {
-    if(checkWins()) {
-        restart();
-        return true;
-    }
-
-    for(var i = 0; i < winCombinations.length; i++) {
-
-        ax = parseInt(winCombinations[i][0].charAt(0), 10);
-        ay = parseInt(winCombinations[i][0].charAt(2), 10);
-        bx = parseInt(winCombinations[i][1].charAt(0), 10);
-        by = parseInt(winCombinations[i][1].charAt(2), 10);
-        cx = parseInt(winCombinations[i][2].charAt(0), 10);
-        cy = parseInt(winCombinations[i][2].charAt(2), 10);
-
-        a = winCombinations[i][0];
-        b = winCombinations[i][1];
-        c  =winCombinations[i][2];
-
-
-        // ----- ATTACK -----
-        if((oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1) ||
-            (oBoard.indexOf(b) != -1 && oBoard.indexOf(a) != -1)) {
-            if(xBoard.indexOf(c) != -1) {
-                continue;
-            } else {
-                paintO(cx,cy);
-                break;
-            }
-        } else if((oBoard.indexOf(a) != -1 && oBoard.indexOf(c) != -1) ||
-            (oBoard.indexOf(c) != -1 && oBoard.indexOf(a) != -1)) {
-            if(xBoard.indexOf(b) != -1) {
-                continue;
-            } else {
-                paintO(bx, by);
-                break;
-            }
-
-        } else if ((oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1) ||
-            (oBoard.indexOf(c) != -1 && oBoard.indexOf(b) != -1)) {
-            if(xBoard.indexOf(a) != -1) {
-                continue;
-            } else {
-                paintO(ax, ay);
-                break;
-            }
-
-        } else
-
-        // ----- DEFENSE -----
-        if((xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1) ||
-            (xBoard.indexOf(b) != -1 && xBoard.indexOf(a) != -1)) {
-            if(oBoard.indexOf(c) != -1) {
-                continue;
-            } else {
-                paintO(cx,cy);
-                break;
-            }
-        } else if((xBoard.indexOf(a) != -1 && xBoard.indexOf(c) != -1) ||
-            (xBoard.indexOf(c) != -1 && xBoard.indexOf(a) != -1)) {
-            if(oBoard.indexOf(b) != -1) {
-                continue;
-            } else {
-                paintO(bx, by);
-                break;
-            }
-        } else if((xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1) ||
-            (xBoard.indexOf(c) != -1 && xBoard.indexOf(b) != -1)) {
-            if(oBoard.indexOf(a) != -1) {
-                continue;
-            } else {
-                paintO(ax, ay);
-                break;
-            }
-
-        } /*else {
-            firstMoveComputer();
-            break;
-        }*/
-    }
-    if(checkWins()) {
-        restart();
-        return true;
-    }
 }
