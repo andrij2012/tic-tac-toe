@@ -1,8 +1,8 @@
 (function() {
 
     window.onload = function() {
-    paintBoard();
-    document.getElementById('canvas').onclick = movePlayer;
+        paintBoard();
+        document.getElementById('canvas').onclick = movePlayer;
     };
 
     var context;
