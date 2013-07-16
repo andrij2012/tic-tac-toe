@@ -1,9 +1,10 @@
 (function() {
 
     window.onload = function() {
-        paintBoard();
+        document.getElementById('start').onclick  = paintBoard;
         document.getElementById('canvas').onclick = movePlayer;
     };
+
 
     var context;
     var xBoard = [];
@@ -13,7 +14,6 @@
                             ['0 0', '0 1', '0 2'], ['1 0', '1 1', '1 2'], ['2 0', '2 1', '2 2'],
                             ['0 0', '1 1', '2 2'], ['2 0', '1 1', '0 2']]; // winning combinations
 
-    paintBoard();
 
 
     /**
@@ -23,10 +23,21 @@
      * |0 2|1 2|2 2|
      */
     function  paintBoard() {
+        var index       = document.getElementById('list').selectedIndex;
+        var numOfCell   = document.getElementsByTagName("option")[index].value;
+
         var board = document.getElementById('canvas');
 
-        width   = board.width;
-        height  = board.height;
+        document.getElementById('cellNumber').style.display = "none";
+
+        board.style.display = 'inline';
+
+        width   = parseInt(numOfCell, 10) * 100;
+        height  = parseInt(numOfCell, 10) * 100;
+        
+        board.height = height;
+        board.width  = width;
+        
         context = board.getContext('2d');
 
         // Paint the board
