@@ -416,6 +416,53 @@
                 ex = parseInt(winCombinations5x5[i][4].charAt(0), 10);
                 ey = parseInt(winCombinations5x5[i][4].charAt(2), 10);
                 e  = winCombinations5x5[i][4];
+
+                if(oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1
+                 && oBoard.indexOf(c) != -1 && oBoard.indexOf(d) != -1) {
+                    if(xBoard.indexOf(e) != -1) {
+                        continue;
+                    } else {
+                        paintO(ex, ey);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1
+                 && oBoard.indexOf(c) != -1 && oBoard.indexOf(e) != -1) {
+                    if(xBoard.indexOf(d) != -1) {
+                        continue;
+                    } else {
+                        paintO(dx, dy);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1
+                 && oBoard.indexOf(d) != -1 && oBoard.indexOf(e) != -1) {
+                    if(xBoard.indexOf(c) != -1) {
+                        continue;
+                    } else {
+                        paintO(cx, cy);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(oBoard.indexOf(a) != -1 && oBoard.indexOf(c) != -1
+                 && oBoard.indexOf(d) != -1 && oBoard.indexOf(e) != -1) {
+                    if(xBoard.indexOf(b) != -1) {
+                        continue;
+                    } else {
+                        paintO(bx, by);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1
+                 && oBoard.indexOf(d) != -1 && oBoard.indexOf(d) != -1) {
+                    if(xBoard.indexOf(e) != -1) {
+                        continue;
+                    } else {
+                        paintO(ex, ey);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                }
             }
         }
 
@@ -691,6 +738,53 @@
                 ex = parseInt(winCombinations5x5[i][4].charAt(0), 10);
                 ey = parseInt(winCombinations5x5[i][4].charAt(2), 10);
                 e  = winCombinations5x5[i][4];
+
+                if(xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1
+                 && xBoard.indexOf(c) != -1 && xBoard.indexOf(d) != -1) {
+                    if(oBoard.indexOf(e) != -1) {
+                        continue;
+                    } else {
+                        paintO(ex, ey);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1
+                 && xBoard.indexOf(c) != -1 && xBoard.indexOf(e) != -1) {
+                    if(oBoard.indexOf(d) != -1) {
+                        continue;
+                    } else {
+                        paintO(dx, dy);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1
+                 && xBoard.indexOf(d) != -1 && xBoard.indexOf(e) != -1) {
+                    if(oBoard.indexOf(c) != -1) {
+                        continue;
+                    } else {
+                        paintO(cx, cy);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(xBoard.indexOf(a) != -1 && xBoard.indexOf(c) != -1
+                 && xBoard.indexOf(d) != -1 && xBoard.indexOf(e) != -1) {
+                    if(oBoard.indexOf(b) != -1) {
+                        continue;
+                    } else {
+                        paintO(bx, by);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1
+                 && xBoard.indexOf(d) != -1 && xBoard.indexOf(d) != -1) {
+                    if(oBoard.indexOf(e) != -1) {
+                        continue;
+                    } else {
+                        paintO(ex, ey);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                }
             }
         }
 
