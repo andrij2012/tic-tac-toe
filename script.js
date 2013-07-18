@@ -119,7 +119,7 @@
                               ['7 0', '7 1', '7 2', '7 3', '7 4', '7 5', '7 6', '7 7', '7 8'],
                               ['8 0', '8 1', '8 2', '8 3', '8 4', '8 5', '8 6', '8 7', '8 8'],
                               ['0 0', '1 1', '2 2', '3 3', '4 4', '5 5', '6 6', '7 7', '8 8'],
-                              ['8 0', '7 1', '6 2', '5 3', '4 4', '3 5', '2 6', '1 7', '0 8']]; // winning combinations
+                              ['8 0', '7 1', '6 2', '5 3', '4 4', '3 5', '2 6', '1 7', '0 8']];
 
 
 
@@ -365,6 +365,32 @@
                 dx = parseInt(winCombinations4x4[i][3].charAt(0), 10);
                 dy = parseInt(winCombinations4x4[i][3].charAt(2), 10);
                 d  = winCombinations4x4[i][3];
+
+                if(oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1) {
+                    if(xBoard.indexOf(d) != -1) {
+                        continue;
+                    } else {
+                        paintO(dx, dy);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1 && oBoard.indexOf(d) != -1) {
+                    if(xBoard.indexOf(c) != -1) {
+                        continue;
+                    } else {
+                        paintO(cx, cy);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(oBoard.indexOf(a) != -1 && oBoard.indexOf(c) != -1 && oBoard.indexOf(d) != -1) {
+                    if(xBoard.indexOf(b) != -1) {
+                        continue;
+                    } else {
+                        paintO(bx, by);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                }
             }
         }
 
@@ -606,6 +632,40 @@
                 dx = parseInt(winCombinations4x4[i][3].charAt(0), 10);
                 dy = parseInt(winCombinations4x4[i][3].charAt(2), 10);
                 d  = winCombinations4x4[i][3];
+
+                if(xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1) {
+                    if(oBoard.indexOf(d) != -1) {
+                        continue;
+                    } else {
+                        paintO(dx, dy);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(xBoard.indexOf(a) != -1 && xBoard.indexOf(c) != -1 && xBoard.indexOf(d) != -1) {
+                    if(oBoard.indexOf(b) != -1) {
+                        continue;
+                    } else {
+                        paintO(bx, by);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1 && xBoard.indexOf(d) != -1) {
+                    if(oBoard.indexOf(c) != -1) {
+                        continue;
+                    } else {
+                        paintO(cx, cy);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                } else if(xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1 && xBoard.indexOf(d) != -1) {
+                    if(oBoard.indexOf(a) != -1) {
+                        continue;
+                    } else {
+                        paintO(ax, ay);
+                        if(checkWins()) restart();
+                        return true;
+                    }
+                }
             }
         }
 
@@ -819,9 +879,16 @@
                  && oBoard.indexOf(d) != -1) {
                     alert("Computer win!");
                     return true;
-                } else if ((xBoard.length == 8) || (oBoard.length == 8)) {
-                    alert("Nobody win!");
-                    return true;
+                } else if(!beginPlayer) { 
+                    if(oBoard.length == 8) {
+                        alert("Nobody win!");
+                        return true;
+                    }
+                } else if(beginPlayer) {
+                    if(xBoard.length == 8) {
+                        alert("Nobody win!");
+                        return true;
+                    }
                 }
             }
         }
