@@ -1029,9 +1029,16 @@
                  && oBoard.indexOf(d) != -1 && oBoard.indexOf(e) != -1 && oBoard.indexOf(f) != -1) {
                     alert("Computer win!");
                     return true;
-                } else if ((xBoard.length == 18) || (oBoard.length == 18)) {
-                    alert("Nobody win!");
-                    return true;
+                } else if(!beginPlayer) { 
+                    if(oBoard.length == 18) {
+                        alert("Nobody win!");
+                        return true;
+                    }
+                } else if(beginPlayer) {
+                    if(xBoard.length == 18) {
+                        alert("Nobody win!");
+                        return true;
+                    }
                 }
             }
         }
@@ -1086,9 +1093,16 @@
                  && oBoard.indexOf(g) != -1 && oBoard.indexOf(h) != -1) {
                     alert("Computer win!");
                     return true;
-                } else if ((xBoard.length == 32) || (oBoard.length == 32)) {
-                    alert("Nobody win!");
-                    return true;
+                } else if(!beginPlayer) { 
+                    if(oBoard.length == 32) {
+                        alert("Nobody win!");
+                        return true;
+                    }
+                } else if(beginPlayer) {
+                    if(xBoard.length == 32) {
+                        alert("Nobody win!");
+                        return true;
+                    }
                 }
             }
         }
