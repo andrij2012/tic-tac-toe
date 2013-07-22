@@ -3,6 +3,7 @@
     window.onload = function() {
         document.getElementById('start').onclick  = paintBoard;
         document.getElementById('canvas').onclick = movePlayer;
+        document.getElementById('newGame').onclick = newGame;
     };
 
     var numOfCell;
@@ -140,7 +141,7 @@
         document.getElementById('cellNumber').style.display = "none";
 
         // Display the board
-        board.style.display = 'inline';
+        document.getElementById('gameBoard').style.display = 'inline';
 
         // Generate the width and the height of game board
         width   = numOfCell * 100;
@@ -181,6 +182,14 @@
             beginPlayer = true;
         }
 
+    }
+    
+    function newGame() {
+    	document.getElementById('cellNumber').style.display = "block";
+
+        // Display the board
+        document.getElementById('gameBoard').style.display = 'none';
+        reset();
     }
 
     /**
@@ -605,11 +614,6 @@
                 i = winCombinations9x9[i][8];
             }
         }
-
-        if(checkWins()) {
-            restart();
-            return true;
-        }
     }
 
     /**
@@ -928,10 +932,10 @@
             }
         }
 
-        if(checkWins()) {
+        /*if(checkWins()) {
             restart();
             return true;
-        }
+        }*/
     }
 
     /**
@@ -1120,17 +1124,17 @@
                 h = winCombinations9x9[i][7];
                 i = winCombinations9x9[i][8];
                 
-                if(xBoard.indexOf(a) != -1 && xBoard.indexOf(b) != -1 && xBoard.indexOf(c) != -1
-                 && xBoard.indexOf(d) != -1 && xBoard.indexOf(e) != -1 && xBoard.indexOf(f) != -1 
-                 && xBoard.indexOf(g) != -1 && xBoard.indexOf(h) != -1 && xBoard.indexOf(i) != -1) {
+                if((xBoard.indexOf(a) != -1) && (xBoard.indexOf(b) != -1) && (xBoard.indexOf(c) != -1)
+                 && (xBoard.indexOf(d) != -1) && (xBoard.indexOf(e) != -1) && (xBoard.indexOf(f) != -1) 
+                 && (xBoard.indexOf(g) != -1) && (xBoard.indexOf(h) != -1) && (xBoard.indexOf(i) != -1)) {
                     alert("Player win!");
                     return true;
-                } else if(oBoard.indexOf(a) != -1 && oBoard.indexOf(b) != -1 && oBoard.indexOf(c) != -1
-                 && oBoard.indexOf(d) != -1 && oBoard.indexOf(e) != -1 && oBoard.indexOf(f) != -1 
-                 && oBoard.indexOf(g) != -1 && oBoard.indexOf(h) != -1 && oBoard.indexOf(i) != -1) {
+                } else if((oBoard.indexOf(a) != -1) && (oBoard.indexOf(b) != -1) && (oBoard.indexOf(c) != -1)
+                 && (oBoard.indexOf(d) != -1) && (oBoard.indexOf(e) != -1) && (oBoard.indexOf(f) != -1) 
+                 && (oBoard.indexOf(g) != -1) && (oBoard.indexOf(h) != -1) && (oBoard.indexOf(i) != -1)) {
                     alert("Computer win!");
                     return true;
-                } else if ((xBoard.length == 45) || (oBoard.length == 45)) {
+                } else if ((xBoard.length == 41) || (oBoard.length == 41)) {
                     alert("Nobody win!");
                     return true;
                 }
@@ -1148,5 +1152,11 @@
         xBoard = [];
         oBoard = [];
         paintBoard();
+    }
+    
+    function reset() {
+    	context.clearRect (0, 0, width , height);
+        xBoard = [];
+        oBoard = [];
     }
 })();
